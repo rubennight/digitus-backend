@@ -25,6 +25,6 @@ public enum TipoUsuario {
                 return tipo;
             }
         }
-        throw new IllegalArgumentException("TipoUsuario inválido: " + value);
+        throw new IllegalArgumentException("TipoUsuario inválido: " + value + ". Valores permitidos: admin, cliente.");
     }
 }
