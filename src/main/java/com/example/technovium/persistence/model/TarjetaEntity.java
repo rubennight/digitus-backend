@@ -2,12 +2,8 @@ package com.example.technovium.persistence.model;
 
 import java.time.LocalDate;
 
-import com.example.technovium.util.enums.Banco;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
@@ -18,12 +14,14 @@ import lombok.Data;
 public class TarjetaEntity {
 
     @Id
-    @Column(name = "numero_tarjeta")
-    private Integer numeroTarjeta;
+    @Column(name = "id_tarjeta")
+    private Integer idTarjeta;
 
-    @Enumerated(EnumType.STRING)
+    @Column(name = "numero_tarjeta")
+    private String numeroTarjeta;
+
     @Column(name = "banco", nullable = false)
-    private Banco banco;
+    private String banco;
 
     @Column(name = "caducidad")
     private LocalDate caducidad;

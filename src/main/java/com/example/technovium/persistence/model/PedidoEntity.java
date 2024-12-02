@@ -1,16 +1,10 @@
 package com.example.technovium.persistence.model;
 
-import com.example.technovium.util.enums.MetodoPago;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -24,22 +18,21 @@ public class PedidoEntity {
     @Column(name = "id_pedido")
     private Integer idPedido;
 
-    @ManyToOne
-    @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario")
-    private UsuarioEntity usuario;
+    @Column(name = "id_usuario")
+    private Integer idUsuario;
 
-    @ManyToOne
-    @JoinColumn(name = "direccion", referencedColumnName = "id_domicilio")
-    private DomicilioEntity direccion;
+    @Column(name = "id_domicilio")
+    private Integer idDomicilio;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "metodo_pago", nullable = false)
-    private MetodoPago metodoPago;
+    @Column(name = "id_metodo_pago")
+    private Integer idMetodoPago;
 
-    @ManyToOne
-    @JoinColumn(name = "origen", referencedColumnName = "numero_tarjeta")
-    private TarjetaEntity origen;
+    @Column(name = "id_tarjeta")
+    private Integer idTarjeta;
 
     @Column(name = "total", nullable = false)
     private Double total;
+
+    @Column(name = "folio", nullable = false, length = 8)
+    private String folio;
 }

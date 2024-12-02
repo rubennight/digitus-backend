@@ -29,6 +29,7 @@ public class UsuarioFactory {
         
         Usuario usuario = new Usuario();
 
+        usuario.setIdUsuario(usuarioEntity.getIdUsuario());
         usuario.setNombre(usuarioEntity.getNombre());
         usuario.setCorreo(usuarioEntity.getCorreo());
 

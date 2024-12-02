@@ -6,7 +6,7 @@ import lombok.Data;
 public class Pedido {
     private Integer idUsuario;
     private Integer idDireccion;
-    private String metodoPago;
-    private Tarjeta origen;
+    private Integer idMetodoPago;
+    private Tarjeta tarjeta;
     private Double total;
 }
