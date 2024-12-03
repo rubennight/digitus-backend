@@ -1,13 +1,17 @@
 package com.example.technovium.api.domcilios;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.technovium.persistence.model.DomicilioEntity;
+import com.example.technovium.persistence.model.InfoUsuarioEntity;
 import com.example.technovium.persistence.repository.DomicilioRepository;
+import com.example.technovium.persistence.repository.InfoUsuarioRepository;
 
 @Service
 public class DomcilioService {
@@ -17,19 +21,21 @@ public class DomcilioService {
     @Autowired
     private DomicilioFactory domicilioFactory;
 
+    @Autowired
+    private InfoUsuarioRepository infoUsuarioRepository;
+
     @Transactional
     public Domicilio persistirDomicilio(AgregarDomicilio domicilio) {
 
         Domicilio domicilioValidado = validarDomicilio(domicilio);
-        Domicilio domicilioNoValidado = new Domicilio();
 
         if(domicilioValidado != null){
             domicilioValidado.setYaExistia(true);
             return domicilioValidado;
         }else{
-            domicilioNoValidado = registrarDomicilio(domicilio);
-            domicilioNoValidado.setYaExistia(false);
-            return domicilioNoValidado;
+            domicilioValidado = registrarDomicilio(domicilio);
+            domicilioValidado.setYaExistia(false);
+            return domicilioValidado;
         }
 
     }
@@ -37,16 +43,24 @@ public class DomcilioService {
     public Domicilio validarDomicilio(AgregarDomicilio domicilio){
         Domicilio domicilioDTO = null;
 
-        List<DomicilioEntity> domicilioEntities = domicilioRepository.encontrarPorUsuario(domicilio.getIdUsuario());
+        List<InfoUsuarioEntity> infoUsuarioEntities = infoUsuarioRepository.encontrarPorUsuario(domicilio.getIdUsuario());
+        List<DomicilioEntity> domicilioEntities = new ArrayList<>();
+
         try {
-            if(!domicilioEntities.isEmpty()){
-                for (DomicilioEntity domicilioEntity : domicilioEntities) {
-                    System.out.println(domicilioEntity.getIdDomicilio());
-                    if(domicilioEntity.getCodigoPostal() != null 
-                    && (domicilioEntity.getCodigoPostal().equals(domicilio.getCodigoPostal()) && domicilioEntity.getNumero().equals(domicilio.getNumero()))){
-                        domicilioDTO = domicilioFactory.toObject(domicilioEntity);
-                        break;
+                    
+            if (!infoUsuarioEntities.isEmpty()) {
+
+                for (InfoUsuarioEntity infoUsuarioEntity : infoUsuarioEntities) {
+                    DomicilioEntity domicilioEntity = domicilioRepository.encontrarPorDomicilio(infoUsuarioEntity.getIdDomicilio());
+
+                    domicilioEntities.add(domicilioEntity);
                     }
+            }
+
+            if(!domicilioEntities.isEmpty()){
+                DomicilioEntity domicilioEntity = domicilioRepository.regresarDomicilio(domicilio.getNumero(), domicilio.getCodigoPostal(), domicilio.getTelefono());
+                if(domicilioEntity != null){
+                    domicilioDTO = domicilioFactory.toObject(domicilioEntity);
                 }
             }           
         } catch (Exception e) {
@@ -62,18 +76,29 @@ public class DomcilioService {
 
         try {
             domicilioRepository.registrarDomicilio(
-                domicilio.getIdUsuario(), 
                 domicilio.getCalle(), 
                 domicilio.getNumero(), 
                 domicilio.getColonia(), 
                 domicilio.getCodigoPostal(), 
                 domicilio.getCiudad(), 
                 domicilio.getEstado(), 
-                domicilio.getTelefono());
-            
+                domicilio.getTelefono()
+                );
             domicilioRepository.flush();
 
-            domicilioDTO = validarDomicilio(domicilio);       
+            DomicilioEntity domicilioEntity = domicilioRepository.regresarDomicilio(
+                domicilio.getNumero(), 
+                domicilio.getCodigoPostal(), 
+                domicilio.getTelefono()
+                );
+
+            infoUsuarioRepository.registrarInfoUsuario(
+                domicilio.getIdUsuario(),
+                domicilioEntity.getIdDomicilio()
+            );
+            infoUsuarioRepository.flush();
+
+            domicilioDTO = domicilioFactory.toObject(domicilioEntity);       
 
         } catch (Exception e) {
             e.printStackTrace();

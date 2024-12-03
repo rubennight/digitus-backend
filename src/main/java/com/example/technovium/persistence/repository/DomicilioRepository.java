@@ -1,7 +1,5 @@
 package com.example.technovium.persistence.repository;
 
-import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -17,9 +15,8 @@ public interface DomicilioRepository extends JpaRepository<DomicilioEntity, Inte
 
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO domicilios (id_usuario, calle, numero, colonia, codigo_postal, ciudad, estado, telefono) VALUES (:idUsuario, :calle, :numero, :colonia, :codigoPostal, :ciudad, :estado, :telefono)", nativeQuery = true)
+    @Query(value = "INSERT INTO domicilios (calle, numero, colonia, codigo_postal, ciudad, estado, telefono) VALUES (:calle, :numero, :colonia, :codigoPostal, :ciudad, :estado, :telefono)", nativeQuery = true)
     public void registrarDomicilio(
-        @Param("idUsuario") Integer idUsuario, 
         @Param("calle") String calle, 
         @Param("numero") Integer numero, 
         @Param("colonia") String colonia, 
@@ -28,7 +25,10 @@ public interface DomicilioRepository extends JpaRepository<DomicilioEntity, Inte
         @Param("estado") String estado, 
         @Param("telefono") String telefono);
 
-    @Query("SELECT d FROM DomicilioEntity d WHERE d.idUsuario = :idUsuario")
-    public List<DomicilioEntity> encontrarPorUsuario(@Param("idUsuario") Integer idUsuario);
+    @Query("SELECT d FROM DomicilioEntity d WHERE d.numero = :numero AND d.codigoPostal = :codigoPostal AND d.telefono = :telefono")
+    public DomicilioEntity regresarDomicilio(
+        @Param("numero")Integer numero, 
+        @Param("codigoPostal")Integer codigoPostal, 
+        @Param("telefono")String telefono);
 
 } 

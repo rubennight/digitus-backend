@@ -1,5 +1,7 @@
 package com.example.technovium.persistence.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -10,5 +12,8 @@ public interface MetodoPagoRepository extends JpaRepository<MetodoPagoEntity, In
 
     @Query("SELECT mp FROM MetodoPagoEntity mp WHERE mp.idMetodoPago = :idMetodoPago")
     MetodoPagoEntity obtenerPorId(@Param("idMetodoPago") Integer idMetodoPago);
+
+    @Query("SELECT mp FROM MetodoPagoEntity mp")
+    List<MetodoPagoEntity> obtenerTodosLosMetodosDePago();
     
 }

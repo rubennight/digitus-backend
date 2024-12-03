@@ -1,5 +1,6 @@
 package com.example.technovium.api.productos;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,22 @@ public class ProductoService {
         List<ProductoEntity> productoEntities = productoRepository.encontrarPorCategoria(idCategoria);
 
         List<Producto> productos = productoFactory.toObjects(productoEntities, categoria);
+        
+        return productos;
+    }
+
+    public List<Producto> obtenerTodosLosProductos() {
+        List<ProductoEntity> productoEntities = productoRepository.todosLosProductos();
+        List<Producto> productos = new ArrayList<>();
+
+        for (ProductoEntity productoEntity : productoEntities) {
+            CategoriaEntity categoriaEntity = categoriaRepository.getReferenceById(productoEntity.getCategoria());     
+            String categoria = categoriaEntity.getNombreCategoria();
+
+            Producto producto = productoFactory.toObject(productoEntity, categoria);
+
+            productos.add(producto);
+        }
         
         return productos;
     }

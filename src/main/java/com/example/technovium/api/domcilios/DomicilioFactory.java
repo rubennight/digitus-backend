@@ -40,7 +40,6 @@ public class DomicilioFactory {
 
         DomicilioEntity domicilioEntity = new DomicilioEntity();
         
-        domicilioEntity.setIdUsuario(domicilio.getIdUsuario());
         domicilioEntity.setNumero(domicilio.getNumero());
         domicilioEntity.setTelefono(domicilio.getTelefono());
         domicilioEntity.setEstado(domicilio.getEstado());

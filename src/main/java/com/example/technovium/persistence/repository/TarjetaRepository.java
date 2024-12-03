@@ -22,4 +22,7 @@ public interface TarjetaRepository extends JpaRepository<TarjetaEntity, Integer>
         @Param("numeroTarjeta") String numeroTarjeta, 
         @Param("banco") String banco, 
         @Param("caducidad") LocalDate caducidad);
+
+    @Query("SELECT t FROM TarjetaEntity t WHERE t.idTarjeta = :idTarjeta")
+    public TarjetaEntity encontrarPorIdTarjeta(@Param("idTarjeta") Integer idTarjeta);
 }

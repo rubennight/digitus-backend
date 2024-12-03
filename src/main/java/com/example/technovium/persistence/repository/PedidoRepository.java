@@ -1,5 +1,7 @@
 package com.example.technovium.persistence.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -24,5 +26,8 @@ public interface PedidoRepository extends JpaRepository<PedidoEntity, Integer>{
 
     @Query(value = "SELECT p FROM PedidoEntity p WHERE p.folio = :folio")
     public PedidoEntity encontrarPorFolio(@Param("folio") String folio);
+
+    @Query(value = "SELECT p FROM PedidoEntity p WHERE p.idUsuario = :idUsuario")
+    public List<PedidoEntity> encontrarEntitiesPorUsuario(@Param("idUsuario") Integer idUsuario);
 
 }

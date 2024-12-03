@@ -13,4 +13,7 @@ public interface ProductoRepository extends JpaRepository<ProductoEntity, Intege
     @Query("SELECT p FROM ProductoEntity p WHERE p.categoria = :idCategoria")
     List<ProductoEntity> encontrarPorCategoria(@Param("idCategoria") Integer idCategoria);
 
+    @Query("SELECT p FROM ProductoEntity p")
+    List<ProductoEntity> todosLosProductos();
+
 }

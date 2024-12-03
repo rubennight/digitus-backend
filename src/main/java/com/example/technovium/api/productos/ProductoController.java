@@ -18,5 +18,11 @@ public class ProductoController {
     public List<Producto> buscarProductosPorCategoria(@PathVariable Integer idCategoria) {
         return productoService.productoPorCategoria(idCategoria);
     }
+
+    @GetMapping("todos")
+    public List<Producto> obtenerTodos() {
+        return productoService.obtenerTodosLosProductos();
+    }
+    
     
 }

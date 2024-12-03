@@ -18,9 +18,6 @@ public class DomicilioEntity {
     @Column(name = "id_domicilio")
     private Integer idDomicilio;
 
-    @Column(name = "id_usuario")
-    private Integer idUsuario;
-
     @Column(name = "calle", length = 100)
     private String calle;
 
