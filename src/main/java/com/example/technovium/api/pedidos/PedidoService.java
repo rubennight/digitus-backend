@@ -182,4 +182,12 @@ public class PedidoService {
         return consultaPedidos;
     }
 
+    public List<DetallePedido> todosLosPedidos() {
+        List<PedidoEntity> pedidos = pedidoRepository.findAll();
+
+        List<DetallePedido> consultaPedidos = detallePedidoFactory.toObjects(pedidos);
+
+        return consultaPedidos;
+    }
+
 }
