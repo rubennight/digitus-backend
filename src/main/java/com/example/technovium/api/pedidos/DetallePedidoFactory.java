@@ -73,8 +73,11 @@ public class DetallePedidoFactory {
             detallePedido.setFolio(pedidoEntity.getFolio());
         }
 
+        if(metodoPagoEntity != null){
+            detallePedido.setMetodoPago(metodoPagoEntity.getDescripcion());
+        }
+
         detallePedido.setReceptorDePedido(usuarioEntity.getNombre());
-        detallePedido.setMetodoPago(metodoPagoEntity.getDescripcion());
         detallePedido.setDomicilio(domicilioFactory.toObject(domicilioEntity));
         detallePedido.setTotal(pedidoEntity.getTotal());
 
