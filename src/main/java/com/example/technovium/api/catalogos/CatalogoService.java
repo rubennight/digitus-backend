@@ -57,7 +57,7 @@ public class CatalogoService {
                     tarjetaEntities.add(tarjetaEntity);
                 }else{
                     for (Integer idTarjeta : idTarjetas) {
-                        if(idTarjeta != pedidoEntity.getIdTarjeta()){
+                        if(idTarjeta.equals(pedidoEntity.getIdTarjeta())){
                             idTarjetas.add(pedidoEntity.getIdTarjeta());
 
                             TarjetaEntity tarjetaEntity = tarjetaRepository.encontrarPorIdTarjeta(pedidoEntity.getIdTarjeta());

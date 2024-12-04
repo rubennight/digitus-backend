@@ -31,6 +31,9 @@ public class PedidoService {
     @Autowired
     private DetallePedidoRepository detallePedidoRepository;
 
+    @Autowired
+    private DetallePedidoFactory detallePedidoFactory;
+
     @Transactional
     public EstadoNuevoPedido nuevoPedido(NuevoPedido nuevoPedido) {
         //Se inicia un nuevo estado pedido donde almacenaremos los estados de distrintos procesos.
@@ -169,6 +172,14 @@ public class PedidoService {
         String folio = uuid.toString().substring(0, 7);
 
         return folio;
+    }
+
+    public List<DetallePedido> misPedidos(Integer idUsuario) {
+        List<PedidoEntity> pedidos = pedidoRepository.encontrarEntitiesPorUsuario(idUsuario);
+
+        List<DetallePedido> consultaPedidos = detallePedidoFactory.toObjects(pedidos);
+
+        return consultaPedidos;
     }
 
 }
