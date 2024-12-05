@@ -12,5 +12,6 @@ public class Producto {
     private String marca;
     private Integer stock;
     private String imagenProducto;
+    private String imagenCategoria;
     
 }

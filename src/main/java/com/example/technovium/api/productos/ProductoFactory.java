@@ -6,18 +6,20 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import com.example.technovium.api.pedidos.ProductoDetalle;
+import com.example.technovium.persistence.model.CategoriaEntity;
 import com.example.technovium.persistence.model.ProductoEntity;
 
 @Component
 public class ProductoFactory {
     
-    public Producto toObject(ProductoEntity productoEntity, String categoria){
+    public Producto toObject(ProductoEntity productoEntity, CategoriaEntity categoria){
         Producto producto = new Producto();
 
         producto.setIdProducto(productoEntity.getIdProducto());
         producto.setNombre(productoEntity.getNombre());
         producto.setPrecio(productoEntity.getPrecio());
-        producto.setCategoria(categoria);
+        producto.setCategoria(categoria.getNombreCategoria());
+        producto.setImagenCategoria(categoria.getImagenCategoria());
         producto.setMarca(productoEntity.getMarca());
         producto.setStock(productoEntity.getStock());
         producto.setImagenProducto(productoEntity.getImagenProducto());
@@ -26,7 +28,7 @@ public class ProductoFactory {
 
     }
 
-    public List<Producto> toObjects(List<ProductoEntity> productoEntities, String categoria){
+    public List<Producto> toObjects(List<ProductoEntity> productoEntities, CategoriaEntity categoria){
         List<Producto> productos = new ArrayList<>();
 
         for (ProductoEntity productoEntity : productoEntities) {

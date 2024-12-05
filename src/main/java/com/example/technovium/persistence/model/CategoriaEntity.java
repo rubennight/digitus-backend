@@ -20,5 +20,8 @@ public class CategoriaEntity {
 
     @Column(name = "nombre_categoria")
     private String nombreCategoria;
+
+    @Column(name = "imagen_categoria")
+    private String imagenCategoria;
     
 }

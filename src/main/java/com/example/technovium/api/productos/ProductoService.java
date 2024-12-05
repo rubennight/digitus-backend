@@ -25,11 +25,10 @@ public class ProductoService {
 
     public List<Producto> productoPorCategoria(Integer idCategoria) {
         CategoriaEntity categoriaEntity = categoriaRepository.getReferenceById(idCategoria);     
-        String categoria = categoriaEntity.getNombreCategoria();
         
         List<ProductoEntity> productoEntities = productoRepository.encontrarPorCategoria(idCategoria);
 
-        List<Producto> productos = productoFactory.toObjects(productoEntities, categoria);
+        List<Producto> productos = productoFactory.toObjects(productoEntities, categoriaEntity);
         
         return productos;
     }
@@ -40,9 +39,8 @@ public class ProductoService {
 
         for (ProductoEntity productoEntity : productoEntities) {
             CategoriaEntity categoriaEntity = categoriaRepository.getReferenceById(productoEntity.getCategoria());     
-            String categoria = categoriaEntity.getNombreCategoria();
 
-            Producto producto = productoFactory.toObject(productoEntity, categoria);
+            Producto producto = productoFactory.toObject(productoEntity, categoriaEntity);
 
             productos.add(producto);
         }
